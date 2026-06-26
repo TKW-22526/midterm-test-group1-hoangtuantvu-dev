@@ -22,7 +22,12 @@ function timKiem() {
     <div class="card-body">
     <h5 class="card-title">${sanPham.tenSP}</h5>
     <p class="card-text">${sanPham.moTa}</p>
-    <p class="card-text">Giá: ${sanPham.giaSP.toLocaleString()} VND</p>
+    <p class="card-text">Giá: ${sanPham.giaSP.toLocaleString()} VND</p>`
     </div>
     
-            
+    function doiAnh() {
+        let select = document.getElementById("selectMau");
+        let hinhAnh = document.getElementById("hinhAnh");
+        hinhAnh.src = select.value; 
+    
+    }
