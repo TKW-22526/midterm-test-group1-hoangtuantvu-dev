@@ -27,7 +27,7 @@ function timKiem() {
     
     function doiAnh() {
         let select = document.getElementById("selectMau");
-        let hinhAnh = document.getElementById("hinhAnh");
-        hinhAnh.src = select.value; 
+        let mauSac = document.getElementById("mauSac");
+        mauSac.src = select.value; 
     
     }
