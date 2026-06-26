@@ -25,9 +25,9 @@ function timKiem() {
     <p class="card-text">Giá: ${sanPham.giaSP.toLocaleString()} VND</p>`
     </div>
     
-    function doiAnh() {
+    function mauSac() {
         let select = document.getElementById("selectMau");
-        let mauSac = document.getElementById("mauSac");
-        mauSac.src = select.value; 
-    
+        let hinhAnh = document.getElementById("hinhAnh");
+        hinhAnh.src = select.value; 
+        
     }
