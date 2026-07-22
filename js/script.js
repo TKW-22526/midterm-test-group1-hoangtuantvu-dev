@@ -1,33 +1,93 @@
+let sanPhamDangChon = null;
+
 function timKiem() {
-    let tuKhoa = document.getElementById("txtSearch").value.toLowerCase();
-    let sanPham = null;
-    for (let i = 0; i < danhSachSanPham.length; i++) {
-        if (dsSanpham[i].tenSP.toLowerCase().includes(tuKhoa)) {
-            sanPham = dsSanpham[i];
-            break;
-        }
-    }
-    if (sanPham) {
-        let ketQua = document.getElementById("ketQua");
-        ketQua.innerHTML = `
-        <div class = alert alert-danger mt-3>
-        Không tìm thấy sản phẩm nào có tên chứa từ khóa "
-        </div>
+    let keyword = document
+        .getElementById("txtSearch")
+        .value
+        .toLowerCase()
+        .trim();
+
+    if (!keyword) {
+        document.getElementById("ketqua").innerHTML = `
+            <div class="alert alert-warning">
+                Vui lòng nhập tên sản phẩm để tìm kiếm.
+            </div>
         `;
         return;
-    } 
-    ketQua.innerHTML = `
-    <div class ="card shadow mt-4" style="width: 22rem;">
-    <img src="images/${sanPham.hinhAnh}" class="card-img-top" alt="${sanPham.tenSP}">
-    <div class="card-body">
-    <h5 class="card-title">${sanPham.tenSP}</h5>
-    <p class="card-text">${sanPham.moTa}</p>
-    <p class="card-text">Giá: ${sanPham.giaSP.toLocaleString()} VND</p>`
-    </div>
-    
-    function mauSac() {
-        let select = document.getElementById("selectMau");
-        let hinhAnh = document.getElementById("hinhAnh");
-        hinhAnh.src = select.value; 
-        
     }
+
+    sanPhamDangChon = dsSanPham.find(sp =>
+        sp.tenSP.toLowerCase().includes(keyword)
+    );
+
+    if (!sanPhamDangChon) {
+        document.getElementById("ketqua").innerHTML = `
+            <div class="alert alert-danger">
+                Không tìm thấy sản phẩm phù hợp.
+            </div>
+        `;
+        return;
+    }
+
+    hienThiSanPham(sanPhamDangChon);
+}
+
+function hienThiSanPham(sp) {
+    let option = "";
+
+    sp.mauSac.forEach((mau, index) => {
+        option += `
+            <option value="${index}">
+                ${mau.tenMau}
+            </option>
+        `;
+    });
+
+    document.getElementById("ketqua").innerHTML = `
+        <div class="card shadow">
+            <div class="row g-0">
+                <div class="col-md-5">
+                    <img
+                        id="imgSP"
+                        src="${sp.mauSac[0].hinhAnh}"
+                        class="img-fluid rounded-start"
+                        alt="${sp.tenSP}">
+                </div>
+
+                <div class="col-md-7">
+                    <div class="card-body">
+                        <h3>${sp.tenSP}</h3>
+
+                        <p><b>Mã sản phẩm:</b> ${sp.maSP}</p>
+
+                        <p><b>Giá:</b> ${sp.giaSP.toLocaleString()} VNĐ</p>
+
+                        <p><b>Mô tả:</b> ${sp.moTa}</p>
+
+                        <label class="form-label">Chọn màu</label>
+
+                        <select
+                            id="cmbColor"
+                            class="form-select"
+                            onchange="doiMau()">
+                            ${option}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function doiMau() {
+    if (!sanPhamDangChon) {
+        return;
+    }
+
+    let index = document.getElementById("cmbColor").value;
+    let imgElement = document.getElementById("imgSP");
+
+    if (imgElement && sanPhamDangChon.mauSac[index]) {
+        imgElement.src = sanPhamDangChon.mauSac[index].hinhAnh;
+    }
+}
