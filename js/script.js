@@ -90,4 +90,3 @@ function doiMau() {
     if (imgElement && sanPhamDangChon.mauSac[index]) {
         imgElement.src = sanPhamDangChon.mauSac[index].hinhAnh;
     }
-}
